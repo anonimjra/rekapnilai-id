@@ -1,7 +1,12 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Student, GradingConfig, FormulaType } from "@/lib/calculations";
+import {
+  Student,
+  GradingConfig,
+  FormulaType,
+  generateContextualDescription,
+} from "@/lib/calculations";
 import { exportToExcel, exportToCSV } from "@/lib/exporters";
 import { ValueTable } from "@/components/ValueTable";
 import { DescriptionGenerator } from "@/components/DescriptionGenerator";
@@ -47,7 +52,12 @@ export default function Home() {
       const response = await fetch("/rekapnilai-id/sample-data.json");
       const data = await response.json();
 
-      setStudents(data.students.map((s: any) => ({ ...s, description: "" })));
+      setStudents(
+        data.students.map((s: any) => ({
+          ...s,
+          description: generateContextualDescription(s.scores, data.tpNames, data.kktp),
+        }))
+      );
       setConfig({
         formula: "average",
         kktp: data.kktp,
@@ -56,7 +66,6 @@ export default function Home() {
       setClassName(data.class);
       setSubject(data.subject);
 
-      // Once sample loaded, minimize sidebars so teacher gets wide table view
       showToast("Data contoh berhasil dimuat! ✓", "success");
     } catch {
       showToast("Gagal memuat data contoh", "error");
@@ -64,18 +73,27 @@ export default function Home() {
   };
 
   const handleImport = (data: ParsedData) => {
-    setStudents(data.students.map((s) => ({ ...s, description: "" })));
+    setStudents(
+      data.students.map((s) => ({
+        ...s,
+        description: generateContextualDescription(s.scores, data.tpNames, config.kktp),
+      }))
+    );
     setConfig((prev) => ({ ...prev, tpNames: data.tpNames }));
     showToast(`${data.students.length} siswa berhasil dimuat ✓`, "success");
   };
 
   const handleScoreChange = (studentId: string, tpIndex: number, value: number) => {
     setStudents((prev) =>
-      prev.map((s) =>
-        s.id === studentId
-          ? { ...s, scores: s.scores.map((sc, idx) => (idx === tpIndex ? value : sc)) }
-          : s
-      )
+      prev.map((s) => {
+        if (s.id !== studentId) return s;
+        const newScores = s.scores.map((sc, idx) => (idx === tpIndex ? value : sc));
+        return {
+          ...s,
+          scores: newScores,
+          description: generateContextualDescription(newScores, config.tpNames, config.kktp),
+        };
+      })
     );
     showToast("Nilai tersimpan", "success");
   };

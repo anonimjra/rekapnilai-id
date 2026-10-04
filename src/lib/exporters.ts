@@ -1,5 +1,11 @@
 import * as XLSX from "xlsx";
-import { Student, GradingConfig, calculateFinalValue, getAchievementStatus } from "./calculations";
+import {
+  Student,
+  GradingConfig,
+  calculateFinalValue,
+  getAchievementStatus,
+  generateContextualDescription,
+} from "./calculations";
 
 export const exportToExcel = (
   students: Student[],
@@ -22,12 +28,14 @@ export const exportToExcel = (
 
     // Add TP scores
     config.tpNames.forEach((tpName, index) => {
-      row[`${tpName} (${index + 1})`] = student.scores[index] || "";
+      row[`${tpName} (${index + 1})`] = student.scores[index] !== undefined && student.scores[index] !== null ? student.scores[index] : "";
     });
 
     row["Nilai Akhir"] = finalValue;
     row["Status"] = status === "tercapai" ? "Tercapai ✓" : "Belum Tercapai ✗";
-    row["Deskripsi"] = student.description || "";
+    row["Deskripsi Capaian Rapor"] =
+      student.description ||
+      generateContextualDescription(student.scores, config.tpNames, config.kktp);
 
     return row;
   });
@@ -102,7 +110,8 @@ export const exportToCSV = (
       ...student.scores,
       finalValue,
       status === "tercapai" ? "Tercapai" : "Belum",
-      student.description || "",
+      student.description ||
+        generateContextualDescription(student.scores, config.tpNames, config.kktp),
     ];
 
     return row;
