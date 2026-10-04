@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎓 RekapNilai.id — Otomasi Hitung Nilai Rapor Kurikulum Merdeka
 
-## Getting Started
+[![Live Demo](https://img.shields.io/badge/Demo-Live%20Website-10B981?style=for-the-badge&logo=vercel)](https://anonimjra.github.io/rekapnilai-id/)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
+[![Local First](https://img.shields.io/badge/Architecture-Local--First%20%2F%20Zero--DB-6366F1?style=for-the-badge)](https://github.com/anonimjra/rekapnilai-id)
+[![Data Privacy](https://img.shields.io/badge/Data%20Privacy-100%25%20Client--Side-059669?style=for-the-badge)](https://github.com/anonimjra/rekapnilai-id)
 
-First, run the development server:
+> **Solusi cepat, privat, dan bebas ribet untuk guru mengolah nilai rapor dan menyusun kalimat deskripsi capaian pembelajaran Kurikulum Merdeka secara otomatis tanpa login.**
+
+🌐 **Live Website:** [https://anonimjra.github.io/rekapnilai-id/](https://anonimjra.github.io/rekapnilai-id/)
+
+---
+
+## 💡 Latar Belakang & Masalah Guru
+
+Dalam Kurikulum Merdeka, guru di Indonesia seringkali menghadapi beban kerja administratif yang repetitif menjelang akhir semester:
+- **Ratusan Nilai:** Mengolah nilai dari 30–40 siswa × 4–6 Tujuan Pembelajaran (TP) per mata pelajaran.
+- **Deskripsi Naratif Panjang:** Wajib menulis kalimat capaian kompetensi per siswa (menyebut materi yang dikuasai dan yang butuh bimbingan).
+- **Server Pemerintah Sering Down:** Aplikasi e-Rapor resmi kerap lambat saat masa pembagian rapor serentak.
+- **Kekhawatiran Privasi Data:** Takut mengunggah identitas siswa ke website sembarangan.
+
+**RekapNilai.id** hadir memotong friksi tersebut: **buka web ➔ masukkan data ➔ nilai dan deskripsi rapor langsung jadi seketika.**
+
+---
+
+## ✨ Fitur Unggulan (Dirancang untuk Guru Gaptek)
+
+- ⚡ **Tombol Coba Data Contoh (1-Klik):** Guru tidak perlu menyiapkan file dulu. Cukup klik satu tombol, 30 data siswa contoh langsung tampil lengkap dengan nilai dan grafik.
+- 📝 **Auto-Generator Deskripsi Rapor:** Algoritma otomatis menyusun kalimat naratif rapor yang mengidentifikasi TP dengan capaian tertinggi (*kekuatan*) dan TP terendah (*perlu bimbingan*).
+- 🧮 **Perhitungan Nilai Real-Time:** Rata-rata, status ketuntasan KKTP, dan predikat langsung berubah otomatis begitu angka di tabel diedit.
+- 📁 **Import & Export Excel (.xlsx):** Tarik dan lepas file Excel nilai yang sudah ada, lalu download hasil olahan rapor yang rapi hanya dengan 1 klik.
+- 📊 **Panel Analisis & Remedial:** Histogram sebaran nilai kelas dan daftar siswa yang membutuhkan bimbingan remedial langsung terlihat jelas.
+- 🔒 **100% Client-Side & Bebas Bocor Data:** Seluruh pengolahan data terjadi di memori browser pengguna. Tidak ada data nama siswa maupun nilai yang dikirim ke server internet (Aman UU PDP & bisa digunakan secara offline).
+
+---
+
+## 🛠️ Tech Stack Modern
+
+- **Framework:** [Next.js](https://nextjs.org/) (App Router, Static Export)
+- **Language:** [TypeScript](https://www.typescriptlang.org/) (Strict Mode)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Spreadsheet Engine:** [SheetJS (xlsx)](https://sheetjs.com/) — Membaca dan menulis Excel murni di browser
+- **Icons:** [Lucide React](https://lucide.dev/)
+- **Hosting:** GitHub Pages (Static Hosting Rp 0 / Tanpa Database Server)
+
+---
+
+## 🚀 Menjalankan Project Secara Lokal
+
+Pastikan Node.js (v18+) sudah terinstall di komputer Anda:
 
 ```bash
+# 1. Clone repository ini
+git clone https://github.com/anonimjra/rekapnilai-id.git
+
+# 2. Masuk ke direktori project
+cd rekapnilai-id
+
+# 3. Install dependencies
+npm install
+
+# 4. Jalankan development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Buka [http://localhost:3000](http://localhost:3000) pada browser Anda.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📦 Build & Deploy ke GitHub Pages
 
-## Learn More
+Project ini dikonfigurasi untuk diekspor sebagai website statis:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# Build static export
+npm run build
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Deploy ke branch gh-pages
+npx gh-pages -d out -b gh-pages --dotfiles
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 📄 Lisensi
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Didistribusikan di bawah lisensi MIT. Bebas digunakan dan dikembangkan untuk memajukan pendidikan di Indonesia.
